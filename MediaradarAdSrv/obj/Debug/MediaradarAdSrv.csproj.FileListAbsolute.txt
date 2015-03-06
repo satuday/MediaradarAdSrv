@@ -59,3 +59,10 @@ I:\MediaradarAdSrv\MediaradarAdSrv\bin\StructureMap.pdb
 I:\MediaradarAdSrv\MediaradarAdSrv\bin\StructureMap.xml
 I:\MediaradarAdSrv\MediaradarAdSrv\bin\StructureMap.Net4.pdb
 I:\MediaradarAdSrv\MediaradarAdSrv\bin\Trirand.Web.Mvc.dll
+I:\MediaradarAdSrv\MediaradarAdSrv\bin\Microsoft.Practices.ServiceLocation.dll
+I:\MediaradarAdSrv\MediaradarAdSrv\bin\StructureMap.Web.dll
+I:\MediaradarAdSrv\MediaradarAdSrv\bin\WebActivatorEx.dll
+I:\MediaradarAdSrv\MediaradarAdSrv\bin\Microsoft.Practices.ServiceLocation.pdb
+I:\MediaradarAdSrv\MediaradarAdSrv\bin\Microsoft.Practices.ServiceLocation.xml
+I:\MediaradarAdSrv\MediaradarAdSrv\bin\StructureMap.Web.pdb
+I:\MediaradarAdSrv\MediaradarAdSrv\bin\StructureMap.Web.xml

@@ -10,6 +10,12 @@ namespace MediaradarAdSrv.Controllers
 {
     public class AdDataController : Controller
     {
+        Services.IAdDataService _AdDataService;
+        public AdDataController(Services.IAdDataService adDataService)
+        {
+            _AdDataService = adDataService;
+        }
+
         [OutputCache(Duration = 20, VaryByParam = "none")]
         public ActionResult Index()
         {
@@ -48,7 +54,7 @@ namespace MediaradarAdSrv.Controllers
             adsGrid.SortSettings.AutoSortByPrimaryKey = false;
             adsGrid.SortSettings.MultiColumnSorting = true;
 
-            adsGrid.SortSettings.InitialSortColumn = "NumPages";
+            adsGrid.SortSettings.InitialSortColumn = "NumPages Asc, BrandName Desc";
             adsGrid.SortSettings.InitialSortDirection = SortDirection.Desc;
             adsGrid.DataUrl = Url.Action("Top5AdsGridDataRequest");
         }
@@ -58,7 +64,7 @@ namespace MediaradarAdSrv.Controllers
             adsGrid.ID = "top5BrandGrid";
             adsGrid.SortSettings.AutoSortByPrimaryKey = false;
             adsGrid.SortSettings.MultiColumnSorting = true;
-
+      
             adsGrid.SortSettings.InitialSortColumn = "NumPages";
             adsGrid.SortSettings.InitialSortDirection = SortDirection.Desc;
             adsGrid.DataUrl = Url.Action("Top5BrandGridDataRequest");
@@ -68,17 +74,8 @@ namespace MediaradarAdSrv.Controllers
         {
             IEnumerable<AdDataSrv.Ad> ads;
             DateTime from = new DateTime(2011, 1, 1), to = new DateTime(2011, 4, 1);
-            var key = from.ToShortDateString() + "-" + to.ToShortDateString();
-            if (Session[key.ToString()] != null)
-            {
-                ads = Session[key.ToString()] as IEnumerable<AdDataSrv.Ad>;
-            }
-            else
-            {
-                ServiceClient.AdSrv adService = new ServiceClient.AdSrv();
-                ads = adService.GetAdsByDateRange(from, to);
-                Session.Add(key.ToString(), ads);
-            }
+
+            ads = _AdDataService.GetAdsByDateRange(from, to);
 
             var gridModel = new AdGridViewModel();
 
@@ -103,21 +100,11 @@ namespace MediaradarAdSrv.Controllers
             IEnumerable<AdDataSrv.Ad> ads;
             DateTime from = new DateTime(2011, 1, 1), to = new DateTime(2011, 4, 1);
             var key = from.ToShortDateString() + "-" + to.ToShortDateString();
-            if (Session[key.ToString()] != null)
-            {
-                ads = Session[key.ToString()] as IEnumerable<AdDataSrv.Ad>;
-            }
-            else
-            {
-                ServiceClient.AdSrv adService = new ServiceClient.AdSrv();
-                ads = adService.GetAdsByDateRange(from, to);
-                Session.Add(key.ToString(), ads);
-            }
+
+            ads = _AdDataService.GetAdsByDateRange(from, to);
 
             var gridModel = new AdGridViewModel();
-
             setUpFullGrid(gridModel.FullAdsGrid);
-
 
             var model = from a in ads
                         select new Models.AdsViewModel()
@@ -129,7 +116,7 @@ namespace MediaradarAdSrv.Controllers
                             Position = a.Position
                         };
 
-            
+
             return gridModel.FullAdsGrid.DataBind(model.AsQueryable());
         }
 
@@ -137,17 +124,8 @@ namespace MediaradarAdSrv.Controllers
         {
             IEnumerable<AdDataSrv.Ad> ads;
             DateTime from = new DateTime(2011, 1, 1), to = new DateTime(2011, 4, 1);
-            var key = from.ToShortDateString() + "-" + to.ToShortDateString();
-            if (Session[key.ToString()] != null)
-            {
-                ads = Session[key.ToString()] as IEnumerable<AdDataSrv.Ad>;
-            }
-            else
-            {
-                ServiceClient.AdSrv adService = new ServiceClient.AdSrv();
-                ads = adService.GetAdsByDateRange(from, to);
-                Session.Add(key.ToString(), ads);
-            }
+
+            ads = _AdDataService.GetAdsByDateRange(from, to);
 
             var gridModel = new AdGridViewModel();
 
@@ -171,19 +149,10 @@ namespace MediaradarAdSrv.Controllers
             IEnumerable<AdDataSrv.Ad> ads;
             DateTime from = new DateTime(2011, 1, 1), to = new DateTime(2011, 4, 1);
             var key = from.ToShortDateString() + "-" + to.ToShortDateString();
-            if (Session[key.ToString()] != null)
-            {
-                ads = Session[key.ToString()] as IEnumerable<AdDataSrv.Ad>;
-            }
-            else
-            {
-                ServiceClient.AdSrv adService = new ServiceClient.AdSrv();
-                ads = adService.GetAdsByDateRange(from, to);
-                Session.Add(key.ToString(), ads);
-            }
+
+            ads = _AdDataService.GetAdsByDateRange(from, to);
 
             var gridModel = new AdGridViewModel();
-
             setupCoverGrid(gridModel.FullAdsGrid);
 
             var model = from a in ads
