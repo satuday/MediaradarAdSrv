@@ -28,26 +28,11 @@
     @Html.Trirand().JQGrid(Model.Top5AdsByPageCoverageGrid, "top5AdsGrid")
 </div>
 
-<h2>Top 5 Brand</h2>
+<h2>Top 5 Brands</h2>
 
 <div>
     @Html.Trirand().JQGrid(Model.Top5BrandByPageCoverageGrid, "top5BrandGrid")
 </div>
 
 @Scripts.Render("~/bundles/jqGrid")
-
-@*<script>
-    $(document).ready(function () {
-
-        $('#top5AdsGrid').jqGrid(
-            {
-                multiSort: true,
-                sortname: 'NumPages desc, BrandName',
-                sortorder: 'asc',
-                caption: 'Multi-column Sorting',
-
-            });
-
-    });
-    </script>*@
 

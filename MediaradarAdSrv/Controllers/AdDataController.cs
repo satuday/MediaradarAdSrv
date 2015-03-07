@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Trirand.Web.Mvc;
+using PowerfulExtensions.Linq;
 
 namespace MediaradarAdSrv.Controllers
 {
@@ -54,7 +55,7 @@ namespace MediaradarAdSrv.Controllers
             adsGrid.SortSettings.AutoSortByPrimaryKey = false;
             adsGrid.SortSettings.MultiColumnSorting = true;
 
-            adsGrid.SortSettings.InitialSortColumn = "NumPages Asc, BrandName Desc";
+            adsGrid.SortSettings.InitialSortColumn = "NumPages";
             adsGrid.SortSettings.InitialSortDirection = SortDirection.Desc;
             adsGrid.DataUrl = Url.Action("Top5AdsGridDataRequest");
         }
@@ -129,9 +130,13 @@ namespace MediaradarAdSrv.Controllers
 
             var gridModel = new AdGridViewModel();
 
-            setupCoverGrid(gridModel.FullAdsGrid);
+            setupTop5AdsGrid(gridModel.FullAdsGrid);
 
-            var model = from a in ads
+            var model = from a in ads.OrderByDescending(a => a.NumPages)
+                            .Distinct(a => a.Brand.BrandId)
+                            .Take(5)
+                            .OrderByDescending(a => a.NumPages)
+                            .ThenBy(a => a.Brand.BrandName)
                         select new Models.AdsViewModel()
                         {
                             AdId = a.AdId,
@@ -140,7 +145,6 @@ namespace MediaradarAdSrv.Controllers
                             NumPages = a.NumPages,
                             Position = a.Position
                         };
-            model = model.OrderByDescending(a => a.NumPages).Distinct().Take(5).OrderByDescending(a => a.NumPages).ThenBy(a => a.BrandName);
             return gridModel.FullAdsGrid.DataBind(model.AsQueryable());
         }
 
@@ -153,9 +157,13 @@ namespace MediaradarAdSrv.Controllers
             ads = _AdDataService.GetAdsByDateRange(from, to);
 
             var gridModel = new AdGridViewModel();
-            setupCoverGrid(gridModel.FullAdsGrid);
+            setupTop5BrandGrid(gridModel.FullAdsGrid);
 
-            var model = from a in ads
+            var model = from a in ads.OrderByDescending(a => a.NumPages)
+                        .Distinct(a => a.Brand.BrandId)
+                        .Take(5)
+                        .OrderByDescending(a => a.NumPages)
+                        .ThenBy(a => a.Brand.BrandName)
                         select new Models.AdsViewModel()
                         {
                             AdId = a.AdId,
@@ -164,7 +172,6 @@ namespace MediaradarAdSrv.Controllers
                             NumPages = a.NumPages,
                             Position = a.Position
                         };
-            model = model.OrderByDescending(a => a.NumPages).Distinct().Take(5).OrderByDescending(a => a.NumPages).ThenBy(a => a.BrandName);
             return gridModel.FullAdsGrid.DataBind(model.AsQueryable());
         }
     }

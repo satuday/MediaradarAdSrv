@@ -66,3 +66,4 @@ I:\MediaradarAdSrv\MediaradarAdSrv\bin\Microsoft.Practices.ServiceLocation.pdb
 I:\MediaradarAdSrv\MediaradarAdSrv\bin\Microsoft.Practices.ServiceLocation.xml
 I:\MediaradarAdSrv\MediaradarAdSrv\bin\StructureMap.Web.pdb
 I:\MediaradarAdSrv\MediaradarAdSrv\bin\StructureMap.Web.xml
+I:\MediaradarAdSrv\MediaradarAdSrv\bin\PowerfulExtensions_4.5.dll
